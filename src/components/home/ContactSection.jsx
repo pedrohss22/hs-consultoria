@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, MapPin, Send, Loader2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+
 
 const contactInfo = [
     {
@@ -31,18 +31,37 @@ export default function ContactSection() {
         phone: '',
         message: ''
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = async (e) => {
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        setIsSubmitting(true);
         
-        // Simula envio
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Monta a mensagem do WhatsApp
+        let whatsappMessage = `Olá! Meu nome é ${formData.name}`;
         
-        toast.success("Mensagem enviada com sucesso! Entraremos em contato em breve.");
+        if (formData.email) {
+            whatsappMessage += `\nEmail: ${formData.email}`;
+        }
+        
+        if (formData.phone) {
+            whatsappMessage += `\nTelefone: ${formData.phone}`;
+        }
+        
+        if (formData.message) {
+            whatsappMessage += `\n\nMensagem:\n${formData.message}`;
+        }
+        
+        // Codifica a mensagem para URL
+        const encodedMessage = encodeURIComponent(whatsappMessage);
+        
+        // Número do WhatsApp (sem espaços, traços ou parênteses)
+        const whatsappNumber = '5583999094450';
+        
+        // Abre o WhatsApp com a mensagem
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        
+        // Limpa o formulário
         setFormData({ name: '', email: '', phone: '', message: '' });
-        setIsSubmitting(false);
     };
 
     return (
@@ -111,20 +130,10 @@ export default function ContactSection() {
                             </div>
                             <Button 
                                 type="submit"
-                                disabled={isSubmitting}
                                 className="w-full bg-[#c9a962] hover:bg-[#b8984f] text-black font-semibold h-14 rounded-xl text-lg transition-all duration-300"
                             >
-                                {isSubmitting ? (
-                                    <>
-                                        <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                                        Enviando...
-                                    </>
-                                ) : (
-                                    <>
-                                        <Send className="w-5 h-5 mr-2" />
-                                        Enviar Mensagem
-                                    </>
-                                )}
+                                <Send className="w-5 h-5 mr-2" />
+                                Enviar Mensagem
                             </Button>
                         </form>
                     </motion.div>
