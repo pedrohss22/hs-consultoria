@@ -5,6 +5,7 @@ import AboutSection from '../components/home/AboutSection';
 import TrainingSection from '../components/home/TrainingSection';
 import StatsSection from '../components/home/StatsSection';
 import ContactSection from '../components/home/ContactSection';
+import ClientsSection from '../components/home/ClientsSection';
 import Footer from '../components/home/Footer';
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
             <AboutSection />
             <TrainingSection />
             <StatsSection />
+            <ClientsSection />
             <ContactSection />
             <Footer />
         </div>
