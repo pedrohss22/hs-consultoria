@@ -5,7 +5,7 @@ const stats = [
     { value: "10+", label: "Anos de Experiência" },
     { value: "100%", label: "Foco em Resultados" },
     { value: "360°", label: "Visão Estratégica" },
-    { value: "24/7", label: "Suporte Dedicado" }
+    { value: "24/7", label: "Suporte" }
 ];
 
 export default function StatsSection() {
